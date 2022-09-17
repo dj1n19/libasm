@@ -11,23 +11,25 @@ loop:
     mov     dl, BYTE [rdi + rcx]
     mov     dh, BYTE [rsi + rcx]
     cmp     BYTE [rdi + rcx], 0
-    jz      is_neg
+    jz      exit
     cmp     BYTE [rsi + rcx], 0
-    jz      is_neg
+    jz      exit
     cmp     dl, dh
-    jne     is_neg
+    jne     exit
     inc     rcx
     jmp     loop
 
-is_neg:
+exit:
     cmp     dl, dh
-    jl      neg
-
-break:
-    mov     al, dl
-    sub     al, dh
+    jg      greater
+    jl      lower
+    mov     rax, 0
     ret
 
-neg:
-    or      al, 128
-    jmp     break
+lower:
+    mov     rax, -1
+    ret
+
+greater:
+    mov     rax, 1
+    ret
