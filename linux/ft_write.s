@@ -3,8 +3,6 @@
 
     section .text
 
-; rdi => fd, rsi => *src, rdx => size
-
 ft_write:
         mov     rax, 1
         syscall
